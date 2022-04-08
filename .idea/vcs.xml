@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="VcsDirectoryMappings">
+    <mapping directory="$PROJECT_DIR$" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/AnasWebsite" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/Making a Portfolio/portfolio" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/WebscrapingProject1" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/pyautogui_project1" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/pythonProject1" vcs="Git" />
+  </component>
+</project>
