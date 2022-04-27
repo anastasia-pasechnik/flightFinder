@@ -17,13 +17,28 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <EditText
-            android:id="@+id/question_title"
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="@string/title_activity_question"
-            android:inputType="textPersonName" />
+            android:layout_height="match_parent">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/question_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/title_activity_question"
+                android:textColorHint="#616161" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/TetInput_Answer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/question_answer" />
+        </com.google.android.material.textfield.TextInputLayout>
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

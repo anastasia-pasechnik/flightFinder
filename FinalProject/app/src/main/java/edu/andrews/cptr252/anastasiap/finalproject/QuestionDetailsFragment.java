@@ -67,7 +67,7 @@ public class QuestionDetailsFragment extends Fragment {
         }
 
 
-        mQuestion = new Question(); // create new bug
+        mQuestion = new Question(); // create new question
 
     }
 
@@ -78,7 +78,7 @@ public class QuestionDetailsFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_question_details, container, false);
 
 
-        // get reference to EditText box for bug title
+        // get reference to EditText box for question title
         mTitleField = v.findViewById(R.id.question_title);
         mTitleField.addTextChangedListener(new TextWatcher() {
             @Override
@@ -89,10 +89,10 @@ public class QuestionDetailsFragment extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence s,int start,int before,int count) {
-                // user typed text, update the bug title
+                // user typed text, update the question title
                 mQuestion.setTitle(s.toString());
-                // write the new title to the message log for debugging
-                Log.d(TAG, "Title changed to " + mQuestion.getTitle());
+
+                Log.d(TAG, "Question changed to " + mQuestion.getTitle());
             }
             @Override
             public void afterTextChanged(Editable s) {

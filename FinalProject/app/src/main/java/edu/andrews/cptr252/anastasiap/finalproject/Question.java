@@ -7,6 +7,12 @@ public class Question {
 
     /** Title of bug */
     private String mTerm;
+
+    /** Answer for question */
+    private String mAnswer;
+
+
+
     /**
      * Create and initialize a new Bug.
      */
@@ -35,6 +41,14 @@ public class Question {
     public void setTitle(String term) {
         mTerm = term;
     }
+
+
+
+    // getters and setters for private fields
+    public String getDescription() { return mAnswer; }
+    public void setDescription(String answer) { mAnswer = answer; }
+
+
 }
 
 
