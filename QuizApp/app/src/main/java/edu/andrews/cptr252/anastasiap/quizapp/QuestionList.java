@@ -8,6 +8,10 @@ import java.util.UUID;
 public class QuestionList {
 
 
+    public void addQuestion(Question question) {
+        mQuestions.add(question);
+    }
+
     /** Instance variable for QuestionList **/
     private static QuestionList sOurInstance;
 
@@ -21,12 +25,7 @@ public class QuestionList {
     private QuestionList(Context appContext) {
         mAppContext = appContext;
         mQuestions = new ArrayList<>();
-        for (int i = 0; i < 100; i++) {
-            Question question = new Question();
-            question.setTitle("Question #" + i);
 
-            mQuestions.add(question);
-        }
     }
 
 

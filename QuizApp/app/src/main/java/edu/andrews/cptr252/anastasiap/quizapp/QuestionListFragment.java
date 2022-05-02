@@ -1,8 +1,12 @@
 package edu.andrews.cptr252.anastasiap.quizapp;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -31,15 +35,52 @@ public class QuestionListFragment extends Fragment {
     }
 
 
+
+    /** Create a new question, add it to the list and launch question editor. */
+    private void addQuestion() {
+        // create new question
+        Question question = new Question();
+        // add question to the list
+        QuestionList.getInstance(getActivity()).addQuestion(question);
+        // create an intent to send to QuestionDetailsActivity
+        // add the question Id as an extra so QuestionDetailsFragment can edit it.
+        Intent intent = new Intent(getActivity(), QuestionDetailsActivity.class);
+        intent.putExtra(QuestionDetailsFragment.EXTRA_QUESTION_ID, question.getId());
+        // launch QuestionDetailsActivity which will launch QuestionDetailsFragment
+        startActivityForResult(intent, 0);
+    }
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.menu_question_list, menu);
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menu_item_add_question:
+                // new question icon clicked
+                addQuestion();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
+
+        setHasOptionsMenu(true);
+
+
         getActivity().setTitle(R.string.question_list_label);
 
         mQuestions = QuestionList.getInstance(getActivity()).getQuestions();
 
-        // use our custom bug adapter for generating views for each bug
+        // use our custom question adapter for generating views for each question
         mQuestionAdapter = new QuestionAdapter(mQuestions);
 
         // for now, list bugs in log
