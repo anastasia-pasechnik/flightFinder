@@ -16,15 +16,17 @@
 
         <TextView
             android:id="@+id/question_list_item_questionTextView"
-            android:layout_width="196dp"
+            android:layout_width="46dp"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:hint="@string/question_title_label"
             android:textColorHint="#757575" />
 
         <TextView
             android:id="@+id/question_list_item_answerTextView"
-            android:layout_width="186dp"
-            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
             android:hint="@string/answer_label"
             android:textColorHint="#757575" />
 

@@ -110,7 +110,7 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.ViewHo
         // Update widgets on view with question details
         questionTitleTextView.setText(question.getTitle());
 
-        questionAnswerTextView.setText(question.getTitle());
+        questionAnswerTextView.setText(question.getDescription());
 
     }
 
