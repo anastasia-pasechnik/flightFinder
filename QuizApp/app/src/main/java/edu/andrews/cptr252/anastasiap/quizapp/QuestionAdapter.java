@@ -1,6 +1,7 @@
 package edu.andrews.cptr252.anastasiap.quizapp;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,6 +27,9 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.ViewHo
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
+        /** Context hosting the view */
+        public Context mContext;
+
         /** TextView that displays question title */
         public TextView questionTitleTextView;
         /** TextView that displays question answer */
@@ -40,24 +44,32 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.ViewHo
 
             questionAnswerTextView = itemView.findViewById(R.id.question_list_item_answerTextView);
 
+            // Get the context of the view. This will be the activity hosting the view.
+            mContext = itemView.getContext();
+
             itemView.setOnClickListener(this);
         }
 
         /**
          * OnClick listener for question in the question list.
          * Triggered when user clicks on a question in the list
-         * @param v is view for question that was clicked
+         * @param /is view for question that was clicked
          */
 
         @Override
-        public void onClick(View v) {
+        public void onClick(View view) {
             // Get index of question that was clicked.
             int position = getAdapterPosition();
             // For now, just display the question title.
             // In the future, open the selected question.
             if (position != RecyclerView.NO_POSITION) {
                 Question question = mQuestions.get(position);
-                Log.d(TAG, question.getTitle() + " was clicked");
+
+                // start an instance of QuestionDetailsFragment
+                Intent i = new Intent(mContext, QuestionDetailsActivity.class);
+                // pass the id of the question as an intent
+                i.putExtra(QuestionDetailsFragment.EXTRA_QUESTION_ID, question.getId());
+                mContext.startActivity(i);
             }
         }
     } // end ViewHolder

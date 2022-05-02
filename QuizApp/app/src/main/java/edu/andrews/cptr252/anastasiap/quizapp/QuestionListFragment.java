@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.ListFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -16,7 +17,7 @@ public class QuestionListFragment extends Fragment {
 
     /** RecyclerView that displays list of questions */
     private RecyclerView mRecyclerView;
-    /** Adapter that generates/resuses views to display questions */
+    /** Adapter that generates/reuses views to display questions */
     private QuestionAdapter mQuestionAdapter;
 
     /** Tag for message log */
@@ -66,5 +67,15 @@ public class QuestionListFragment extends Fragment {
     }
 
 
+    /**
+     * Question list fragment was paused (user was most likely editing a question).
+     * Notify the adapter that the data set (Question list) may have changed.
+     * The adapter should update the views.
+     */
+    @Override
+    public void onResume() {
+        super.onResume(); // first execute parent's onResume method
+        mQuestionAdapter.notifyDataSetChanged();
+    }
 
 }

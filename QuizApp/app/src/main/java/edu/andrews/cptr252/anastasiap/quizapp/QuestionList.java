@@ -3,8 +3,10 @@ package edu.andrews.cptr252.anastasiap.quizapp;
 import android.content.Context;
 
 import java.util.ArrayList;
+import java.util.UUID;
 
 public class QuestionList {
+
 
     /** Instance variable for QuestionList **/
     private static QuestionList sOurInstance;
@@ -46,5 +48,13 @@ public class QuestionList {
      */
     public ArrayList<Question> getQuestions() { return mQuestions; }
 
+
+    public Question getQuestion (UUID id) {
+        for (Question question : mQuestions) {
+            if (question.getId().equals(id))
+                return question;
+        }
+        return null;
+    }
 
 }
