@@ -1,6 +1,7 @@
 package edu.andrews.cptr252.anastasiap.quizapp;
 
 import android.content.Context;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.UUID;
@@ -9,7 +10,9 @@ public class QuestionList {
 
 
     public void addQuestion(Question question) {
+
         mQuestions.add(question);
+        saveQuestions();
     }
 
     /** Instance variable for QuestionList **/
@@ -19,12 +22,50 @@ public class QuestionList {
     private ArrayList<Question> mQuestions;
 
 
+    /** Tag for message log */
+    private static final String TAG = "QuestionList";
+    /** name of JSON file containing list of questions */
+    private static final String FILENAME = "questions.json";
+    /** Reference to JSON serializer for a list of questions */
+    private QuestionJSONSerializer mSerializer;
+
+
+    /**
+     * Write question list to JSON file.
+     * @return true if successful, false otherwise.
+     */
+    public boolean saveQuestions() {
+        try {
+            mSerializer.saveQuestions(mQuestions);
+            Log.d(TAG, "Questions saved to file");
+            return true;
+        } catch (Exception e) {
+            Log.e(TAG, "Error saving questions: " + e);
+            return false;
+        }
+    }
+
+
+
     /** Reference to information about app environment */
     private Context mAppContext;
     /** Private constructor. */
     private QuestionList(Context appContext) {
+
         mAppContext = appContext;
-        mQuestions = new ArrayList<>();
+
+        // create our serializer to load and save questions
+        mSerializer = new QuestionJSONSerializer(mAppContext, FILENAME);
+        try {
+            // load questions from JSON file
+            mQuestions = mSerializer.loadQuestions();
+        } catch (Exception e) {
+            // Unable to load from file, so create empty list.
+            // Either file does not exist (okay)
+            // Or file contains error (not great)
+            mQuestions = new ArrayList<>();
+            Log.e(TAG, "Error loading questions: " + e);
+        }
 
     }
 
