@@ -1,7 +1,9 @@
 package edu.andrews.cptr252.anastasiap.quizapp;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,9 +12,35 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.snackbar.Snackbar;
+
 import java.util.ArrayList;
 
 public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.ViewHolder>{
+
+
+    /** Activity hosting the list fragment */
+    private Activity mActivity;
+    public QuestionAdapter(ArrayList<Question> questions, Activity activity) {
+        mQuestions = questions;
+        mActivity = activity;
+    }
+
+
+    /** Return reference to activity hosting the question list fragment */
+    public Context getActivity() {
+        return mActivity;
+    }
+    /**
+     * Put deleted question back into list
+     * @param question to restore
+     * @param position in list where question will go
+     */
+    public void restoreQuestion(Question question, int position) {
+        QuestionList.getInstance(mActivity).addQuestion(position, question);
+        notifyItemInserted(position);
+    }
+
 
     private static final String TAG="QuestionAdapter";
     /** Used to store reference to list of questions*/
@@ -121,6 +149,57 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.ViewHo
     public int getItemCount() {
         return mQuestions.size();
     }
+
+
+
+
+
+    /**
+     * Create snackbar with ability to undo question deletion.
+     */
+    private void showUndoSnackbar(final Question question, final int position) {
+
+        // get root view for activity hosting question list fragment
+        View view = mActivity.findViewById(android.R.id.content);
+
+        // build message stating which question was deleted
+        String questionDeletedText = mActivity.getString(R.string.question_deleted_msg,
+                question.getTitle());
+        // create the snackbar
+        Snackbar snackbar = Snackbar.make(view, questionDeletedText, Snackbar.LENGTH_LONG);
+        // add the Undo option to the snackbar
+        snackbar.setAction(R.string.undo_option, new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // undo is selected, restore the deleted item
+                restoreQuestion(question, position);
+            }
+        });
+        // Text for UNDO will be yellow
+        snackbar.setActionTextColor(Color.YELLOW);
+        // display snackbar
+        snackbar.show();
+    }
+
+    /**
+     * Remove question from list
+     * @param position index of question to remove
+     */
+    public void deleteQuestion(int position) {
+
+        // Save deleted question so we can undo delete if needed.
+        final Question question = mQuestions.get(position);
+        // delete question from list
+        QuestionList.getInstance(mActivity).deleteQuestion(position);
+        // update list of questions in recyclerview
+        notifyItemRemoved(position);
+        // display snackbar so user may undo delete
+        showUndoSnackbar(question, position);
+    }
+
+
+
+
 
 
 } // end of QuestionAdapter class

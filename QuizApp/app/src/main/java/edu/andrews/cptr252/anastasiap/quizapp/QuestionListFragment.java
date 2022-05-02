@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.ListFragment;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -27,7 +28,7 @@ public class QuestionListFragment extends Fragment {
     /** Tag for message log */
     private static final String TAG = "QuestionListFragment";
 
-    /** Reference to list of bugs in display */
+    /** Reference to list of questions in display */
     private ArrayList<Question> mQuestions;
 
     public QuestionListFragment() {
@@ -80,10 +81,9 @@ public class QuestionListFragment extends Fragment {
 
         mQuestions = QuestionList.getInstance(getActivity()).getQuestions();
 
-        // use our custom question adapter for generating views for each question
-        mQuestionAdapter = new QuestionAdapter(mQuestions);
+        mQuestionAdapter = new QuestionAdapter(mQuestions, getActivity());
 
-        // for now, list bugs in log
+        // for now, list questions in log
         for (Question question: mQuestions){
             Log.d(TAG, question.getTitle());
         }
@@ -101,6 +101,11 @@ public class QuestionListFragment extends Fragment {
         // Use a linear layout when displaying questions
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
+
+        // Create and attach our new touch helper for question swipes
+        QuestionSwiper questionSwiper = new QuestionSwiper(mQuestionAdapter);
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(questionSwiper);
+        itemTouchHelper.attachToRecyclerView(mRecyclerView);
 
 
         return v;

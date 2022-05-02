@@ -97,4 +97,25 @@ public class QuestionList {
         return null;
     }
 
+
+    /**
+     * Add a question to the list at given position.
+     * @param position is the index for the question to add.
+     * @param question is the question to add.
+     */
+    public void addQuestion(int position, Question question) {
+        mQuestions.add(position, question);
+        saveQuestions();
+    }
+    /**
+     * Delete a given question from list of questions.
+     * @param position is the index of question to delete.
+     */
+    public void deleteQuestion(int position) {
+        mQuestions.remove(position);
+        saveQuestions();
+    }
+
+
+
 }
